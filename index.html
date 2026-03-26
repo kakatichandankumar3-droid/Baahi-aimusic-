@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="as">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baahi AI Music</title>
+    <style>
+        body {
+            background-color: #0c0c0c;
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 { 
+            color: #1DB954; 
+            font-size: 32px; 
+            margin-bottom: 5px; 
+            text-shadow: 0 0 10px rgba(29, 185, 84, 0.3);
+        }
+        .tagline { color: #888; font-size: 14px; }
+
+        /* Song Card Layout */
+        .player-container {
+            background: #181818;
+            width: 90%;
+            max-width: 400px;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #222;
+        }
+        .album-art {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(45deg, #1db954, #191414);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+        h2 { margin: 10px 0; font-size: 22px; }
+        p.artist { color: #1DB954; font-weight: bold; margin-bottom: 20px; }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .play-btn {
+            background: #1DB954;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);
+        }
+        .play-btn:hover { transform: scale(1.1); }
+        
+        .status-msg {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #ff4444;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>বাঁহী AI Music</h1>
+    <p class="tagline">অসমীয়া AI সংগীতৰ এক নতুন যাত্ৰা</p>
+</header>
+
+<div class="player-container">
+    <div class="album-art">🎵</div>
+    <h2 id="title">প্ৰথমটো AI গান</h2>
+    <p class="artist">Baahi AI Singer</p>
+
+    <div class="controls">
+        <button onclick="togglePlay()" id="playBtn" class="play-btn">▶</button>
+    </div>
+    
+    <p id="errorMsg" class="status-msg">Gaan-tu load hobo pora nai. Folder-ot 'music.mp3' ase ne check korok.</p>
+
+    <audio id="mainAudio">
+        <source src="https://docs.google.com/uc?export=open&id=1ihZcOxitCo4kcrc6zmZ_BctTo3qSUfMo" type="audio/mpeg">
+        Your browser does not support the audio.
+    </audio>
+</div>
+
+<script>
+    var audio = document.getElementById("mainAudio");
+    var btn = document.getElementById("playBtn");
+    var errorMsg = document.getElementById("errorMsg");
+
+    function togglePlay() {
+        if (audio.paused) {
+            audio.play().then(() => {
+                btn.innerHTML = "⏸";
+                errorMsg.style.display = "none";
+            }).catch(e => {
+                console.error("Playback error:", e);
+                errorMsg.style.display = "block";
+            });
+        } else {
+            audio.pause();
+            btn.innerHTML = "▶";
+        }
+    }
+    
+    // Auto-reset button when song ends
+    audio.onended = function() {
+        btn.innerHTML = "▶";
+    };
+</script>
+
+</body>
+</html>
